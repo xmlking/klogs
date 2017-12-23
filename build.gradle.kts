@@ -66,12 +66,6 @@ subprojects {
         compile("io.micrometer:micrometer-registry-prometheus")
     }
 
-    configurations.all { //FIXME: https://github.com/spring-projects/spring-boot/issues/10975
-        resolutionStrategy {
-            force("org.springframework.kafka:spring-kafka:2.1.0.RELEASE")
-        }
-    }
-
     tasks {
         withType<KotlinCompile>().all {
             kotlinOptions {
