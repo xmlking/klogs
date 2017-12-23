@@ -3,6 +3,10 @@ import org.gradle.jvm.tasks.Jar
 
 val springCloudStreamVersion by project
 
+ext { //FIXME: remove when Spring-boot 2.0.0 RC1 released.
+    set("spring-kafka.version", "2.1.0.RELEASE")
+}
+
 apply {
     plugin("com.palantir.docker")
 }
@@ -31,7 +35,6 @@ dependencyManagement {
 dependencies {
     compile(project(":shared"))
     compile("org.springframework.cloud:spring-cloud-stream-binder-kstream")
-    compile("org.springframework.kafka:spring-kafka:2.1.0.RELEASE") //FIXME : remove
 }
 
 /**
