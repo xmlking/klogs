@@ -1,0 +1,38 @@
+server:
+  port: ${PORT:8081}
+logging:
+  level:
+#    root: debug
+    org.apache.kafka.streams.processor.internals: WARN
+
+spring.cloud.stream.kstream:
+  timeWindow.length: 5000
+  timeWindow.advanceBy: 0
+
+spring.cloud.stream.bindings.output:
+  contentType: application/json
+  destination: counts
+  producer:
+#    partitioned: true
+#    partition-key-expression: headers['partitionKey']
+#    partition-count: 12
+    headerMode: raw
+    useNativeEncoding: true
+    keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+    valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+
+spring.cloud.stream.bindings.input:
+  destination: words
+#  group: myGroup
+  consumer:
+    headerMode: raw
+    keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+    valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+
+spring.cloud.stream.kstream.binder:
+  brokers: 127.0.0.1
+  zkNodes: 127.0.0.1
+  configuration:
+    commit.interval.ms: 1000
+    key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+    value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
