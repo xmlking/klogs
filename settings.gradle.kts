@@ -2,6 +2,7 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         maven { url = uri("https://repo.spring.io/milestone") }
+        maven { url = uri("https://repo.spring.io/snapshot" ) }
         maven { url = uri("https://jcenter.bintray.com/") }
     }
 
@@ -17,4 +18,4 @@ pluginManagement {
     }
 }
 
-include("shared", "analyzer", "product")
+include("shared", "analyzer", "product", "raw-word-count")

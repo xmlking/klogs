@@ -49,7 +49,8 @@ subprojects {
         compile("org.jetbrains.kotlin:kotlin-stdlib-jre8")
         compile("org.jetbrains.kotlin:kotlin-reflect")
         // Web
-        compile("org.springframework.boot:spring-boot-starter-webflux")
+        // compile("org.springframework.boot:spring-boot-starter-webflux")
+        compile("org.springframework.boot:spring-boot-starter-web")
         compile("com.fasterxml.jackson.module:jackson-module-kotlin")
         compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
         // Testing
@@ -60,10 +61,11 @@ subprojects {
         testCompile("io.projectreactor:reactor-test")
         testRuntime("org.junit.jupiter:junit-jupiter-engine")
         // Tooling
-        compileOnly("org.springframework:spring-context-indexer")
-        compile("org.springframework.boot:spring-boot-devtools")
-        compile("org.springframework.boot:spring-boot-starter-actuator")
-        compile("io.micrometer:micrometer-registry-prometheus")
+        // compileOnly("org.springframework:spring-context-indexer")
+        // compile("org.springframework.boot:spring-boot-devtools")
+        // compile("org.springframework.boot:spring-boot-starter-actuator")
+        // compile("io.micrometer:micrometer-registry-prometheus")
+        compileOnly("org.springframework.boot:spring-boot-configuration-processor")
     }
 
     tasks {

@@ -1,31 +1,12 @@
 package org.sumo.klogs.util
 
 import org.springframework.http.MediaType.*
-import org.springframework.web.reactive.function.server.ServerRequest
-import org.springframework.web.reactive.function.server.ServerResponse
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-
-
-// -------------------------
-// Spring WebFlux extensions
-// -------------------------
-
-fun ServerRequest.locale() =
-        this.headers().asHttpHeaders().acceptLanguageAsLocales.first() ?: Locale.ENGLISH
-
-fun ServerResponse.BodyBuilder.json() = contentType(APPLICATION_JSON_UTF8)
-
-fun ServerResponse.BodyBuilder.xml() = contentType(APPLICATION_XML)
-
-fun ServerResponse.BodyBuilder.html() = contentType(TEXT_HTML)
-
-fun ServerResponse.BodyBuilder.textStream() = contentType(TEXT_EVENT_STREAM)
-fun ServerResponse.BodyBuilder.jsonStream() = contentType(APPLICATION_STREAM_JSON)
 
 // --------------------
 // Date/Time extensions

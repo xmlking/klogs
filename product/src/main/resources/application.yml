@@ -1,6 +1,8 @@
 spring.cloud.stream.bindings.output.contentType: application/json
 spring.cloud.stream.kstream.binder.configuration.commit.interval.ms: 1000
 spring.cloud.stream.kstream:
+  timeWindow.length: 5000
+  timeWindow.advanceBy: 0
   binder.configuration:
     key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
     value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde

@@ -18,11 +18,10 @@ import org.springframework.messaging.handler.annotation.SendTo
 import java.awt.SystemColor.window
 import jdk.nashorn.tools.ShellFunctions.input
 import org.apache.kafka.streams.kstream.Materialized
+import org.apache.kafka.streams.kstream.Serialized
 import org.springframework.beans.factory.annotation.Autowired
-
-
-
-
+import org.springframework.beans.factory.annotation.Value
+import java.time.LocalTime
 
 
 @SpringBootApplication
@@ -32,24 +31,21 @@ class KlogsApplication
 fun main(args: Array<String>) {
     runApplication<KlogsApplication>(*args)
 }
-//https://github.com/spring-cloud/spring-cloud-stream-samples/tree/master/kstream/kstream-product-tracker
-@Configuration
-class KafkaProcessorConfiguration {
 
-    private val windowLength = 5000L
-    private val advanceBy = 0L
-    private val storeName = "WordCounts"
+@Configuration
+class KafkaProcessorConfiguration(val timeWindows: TimeWindows,
+@Value(value = "\${app.kafka.store-name:product-counts}") private val storeName: String) {
 
     @StreamListener("input")
     @SendTo("output")
     fun process(input: KStream<Any, Product>): KStream<Int, ProductStatus> {
 
         return input
-                .filter { key, product -> productIds().contains(product.id) }
-                .map { key, value -> KeyValue(value, value) }
-                .groupByKey(JsonSerde(Product::class.java), JsonSerde(Product::class.java))
-                .windowedBy(configuredTimeWindow())
-                .count(Materialized.`as`("product-counts"))
+                .filter { _, product -> productIds().contains(product.id) }
+                .map { _, value -> KeyValue(value, value) }
+                .groupByKey(Serialized.with(JsonSerde(Product::class.java), JsonSerde(Product::class.java)))
+                .windowedBy(timeWindows)
+                .count(Materialized.`as`(storeName))
 
                 .toStream()
                 .map { key, value ->
@@ -59,20 +55,10 @@ class KafkaProcessorConfiguration {
                 }
     }
 
-    private fun configuredTimeWindow(): TimeWindows {
-        return if (advanceBy > 0)
-            TimeWindows.of(windowLength).advanceBy(advanceBy)
-        else
-            TimeWindows.of(windowLength)
-    }
-
     private fun productIds(): Set<Int> {
         return setOf(123,124,125)
     }
 }
-
-
-
 
 
 
