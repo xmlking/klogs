@@ -10,15 +10,15 @@ gradle product:bootRun
 ```
 ### Test
 ```bash
-gradle analyzer:test
+gradle product:test
 ```
 ### Build
 ```bash
-gradle analyzer:build -x test 
+gradle product:build -x test 
 # continuous build with `-t`. 
-gradle -t analyzer:build
+gradle -t product:build
 # build docker image
-gradle analyzer:docker -x test 
+gradle product:docker -x test 
 ```
 
 ### ssh to kafka container

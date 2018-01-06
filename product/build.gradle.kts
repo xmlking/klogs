@@ -3,10 +3,6 @@ import org.gradle.jvm.tasks.Jar
 
 val springCloudStreamVersion by project
 
-ext { //FIXME: remove when Spring-boot 2.0.0 RC1 released.
-    set("spring-kafka.version", "2.1.0.RELEASE")
-}
-
 apply {
     plugin("com.palantir.docker")
 }

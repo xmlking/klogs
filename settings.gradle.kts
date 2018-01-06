@@ -18,4 +18,4 @@ pluginManagement {
     }
 }
 
-include("shared", "analyzer", "product", "raw-word-count")
+include("shared", "word-count", "product", "raw-word-count")

@@ -15,7 +15,7 @@ docker-compose -f docker-compose-11.yml up
 
 ### run app
 ```bash
-gradle analyzer:bootRun
+gradle word-count:bootRun
 ```
 
 ### ssh to kafka container
@@ -24,21 +24,16 @@ docker-compose exec kafka bash
 # then you can run following commands in this shell
 ```
 
-### list topics
+### receive messages
 ```bash
-kafka-topics --list --zookeeper zookeeper:2181
+kafka-console-consumer --bootstrap-server kafka:9092 --from-beginning --property print.key=true --topic counts
 ```
 
 ### send messages
 ```bash
 kafka-console-producer --broker-list kafka:9092 --topic words
- ```
- 
-### receive messages
-```bash
-kafka-console-consumer --bootstrap-server kafka:9092 --topic counts --from-beginning --property print.key=true
 ```
-
+ 
 ### show dependencies
 ```bash
 gradle analyzer:dependencies

@@ -1,28 +1,28 @@
-Raw-Word-Count
-==============
-Raw Word-Count Kafka Streams App
+WorkCount
+========
+WorkCount Kafka Streams App
 
 > use `./gradlew` instead of `gradle` if you didn't installed `gradle`
 
 ### Test
 ```bash
-gradle raw-word-count:test
+gradle word-count:test
 ```
 ### Build
 ```bash
-gradle raw-word-count:build -x test 
+gradle word-count:build -x test 
 # continuous build with `-t`. 
-gradle -t raw-word-count:build
+gradle -t word-count:build
 # build docker image
-gradle raw-word-count:docker -x test 
+gradle word-count:docker -x test 
 ```
- 
+
  ### Deploy
- > Deploying to production.  
- ```bash
- nohup java -jar -Dspring.profiles.active=prod raw-word-count-0.1.0-SNAPSHOT.jar > raw-word-count.log 2>&1 & 
- ```
- 
+ > Deploying to production.
+```bash
+nohup java -jar -Dspring.profiles.active=prod word-count-0.1.0-SNAPSHOT.jar > word-count.log 2>&1 & 
+```
+
 ### Run
 > run locally
 #### start kafka
@@ -34,27 +34,19 @@ docker-compose down -v
 
 #### start app
 ```bash
-gradle raw-word-count:bootRun
+gradle word-count:bootRun
 # run with `prod` profile.
-SPRING_PROFILES_ACTIVE=prod gradle raw-word-count:bootRun
+SPRING_PROFILES_ACTIVE=prod gradle word-count:bootRun
 # fource to enable debug logs
-SPRING_PROFILES_ACTIVE=prod gradle raw-word-count:bootRun --debug
+SPRING_PROFILES_ACTIVE=prod gradle word-count:bootRun --debug
+# via docker
+docker-compose up word-count
 ```
 
 ### ssh to kafka container
 ```bash
 docker-compose exec kafka bash
 # then you can run following commands in this shell
-```
-
-### list topics
-```bash
-kafka-topics --zookeeper zookeeper:2181 --list
-```
-
-### to delete topics
-```bash
-kafka-topics --zookeeper localhost:2181 --delete --topic counts
 ```
 
 ### receive messages

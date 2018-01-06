@@ -8,20 +8,27 @@ logging:
 
 spring:
   application:
-    name: analyzer
+    name: work-count
+
   cloud:
     stream:
       bindings:
         input:
           destination: words
+          #group: work-count
           consumer:
             headerMode: raw
+            #startOffset: earliest
+            #resetOffsets: true
         output:
           contentType: application/json
           destination: counts
           producer:
             headerMode: raw
             useNativeEncoding: true
+            #partitioned: true
+            #partition-key-expression: headers['partitionKey']
+            #partition-count: 12
             valueSerde: org.apache.kafka.common.serialization.Serdes$ByteArraySerde
 
       kstream:
@@ -36,4 +43,4 @@ spring:
             key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
             value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
             default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndContinueExceptionHandler
-            application.id: analyzer
+            application.id: work-count
