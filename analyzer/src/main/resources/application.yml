@@ -35,4 +35,5 @@ spring:
             commit.interval.ms: 1000
             key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
             value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndContinueExceptionHandler
             application.id: analyzer

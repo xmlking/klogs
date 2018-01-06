@@ -6,6 +6,7 @@ import org.apache.kafka.common.serialization.Serdes
 import org.apache.kafka.streams.KeyValue
 import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.StreamsConfig
+import org.apache.kafka.streams.errors.LogAndContinueExceptionHandler
 import org.apache.kafka.streams.kstream.KStream
 import org.apache.kafka.streams.kstream.Materialized
 import org.apache.kafka.streams.kstream.Serialized
@@ -56,6 +57,7 @@ class KafkaStreamsConfiguration(
             StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG to Serdes.String().javaClass.name,
             //StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG to  JsonSerde::class.java,
             ConsumerConfig.AUTO_OFFSET_RESET_CONFIG to "earliest",
+            StreamsConfig.DEFAULT_DESERIALIZATION_EXCEPTION_HANDLER_CLASS_CONFIG to LogAndContinueExceptionHandler::class.java,
             StreamsConfig.DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG to WallclockTimestampExtractor::class.java
         )
         return StreamsConfig(props)

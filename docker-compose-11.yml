@@ -3,7 +3,7 @@ version: '2.1'
 services:
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:4.0.0
+    image: confluentinc/cp-zookeeper:3.3.0
     ports:
       - 2181:2181
     environment:
@@ -14,7 +14,7 @@ services:
       - reactnet
 
   kafka:
-    image: confluentinc/cp-kafka:4.0.0
+    image: confluentinc/cp-kafka:3.3.0
     ports:
       - 9092:9092
     environment:

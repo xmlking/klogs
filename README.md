@@ -8,9 +8,9 @@ Kafka-kstream
 docker-compose up
 ```
 
-> to test with kafka 0.10.1.1
+> to test with kafka 0.11
 ```bash
-docker-compose -f docker-compose-10.yml up
+docker-compose -f docker-compose-11.yml up
 ```
 
 ### run app
