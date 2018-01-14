@@ -15,7 +15,7 @@ spring:
       bindings:
         input:
           destination: words
-          #group: work-count
+          group: work-count
           consumer:
             headerMode: raw
             #startOffset: earliest
@@ -25,11 +25,9 @@ spring:
           destination: counts
           producer:
             headerMode: raw
-            useNativeEncoding: true
             #partitioned: true
             #partition-key-expression: headers['partitionKey']
             #partition-count: 12
-            valueSerde: org.apache.kafka.common.serialization.Serdes$ByteArraySerde
 
       kstream:
         timeWindow:

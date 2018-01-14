@@ -24,7 +24,6 @@ docker {
 dependencyManagement {
     imports {
         mavenBom("org.springframework.cloud:spring-cloud-stream-dependencies:$springCloudStreamVersion")
-
     }
 }
 

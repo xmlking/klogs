@@ -23,7 +23,7 @@ gradle product:docker -x test
 
 ### ssh to kafka container
 ```bash
-docker-compose exec kafka bash
+docker-compose -f docker-compose-local.yml exec kafka bash
 # then you can run following commands in this shell
 ```
 

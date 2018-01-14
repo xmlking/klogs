@@ -27,9 +27,10 @@ nohup java -jar -Dspring.profiles.active=prod word-count-0.1.0-SNAPSHOT.jar > wo
 > run locally
 #### start kafka
 ```bash
-docker-compose up
+docker-compose up kafka
+docker-compose -f docker-compose-local.yml up
 # stop and remove volumes
-docker-compose down -v
+docker-compose -f docker-compose-local.yml down -v
 ```
 
 #### start app
@@ -45,7 +46,7 @@ docker-compose up word-count
 
 ### ssh to kafka container
 ```bash
-docker-compose exec kafka bash
+docker-compose -f docker-compose-local.yml exec kafka bash
 # then you can run following commands in this shell
 ```
 
