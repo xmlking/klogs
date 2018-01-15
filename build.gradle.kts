@@ -4,7 +4,6 @@ import org.springframework.boot.gradle.tasks.run.BootRun
 
 val kafkaVersion by project
 
-
 plugins {
     val kotlinVersion = "1.1.61"
     val springDependencyManagement = "1.0.4.RELEASE"
