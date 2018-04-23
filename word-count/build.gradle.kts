@@ -1,8 +1,6 @@
 import com.palantir.gradle.docker.DockerExtension
 import org.gradle.jvm.tasks.Jar
 
-val springCloudStreamVersion by project
-
 apply {
     plugin("com.palantir.docker")
 }
@@ -19,12 +17,6 @@ docker {
     ))
     pull(true)
     dependsOn(tasks.findByName("build"))
-}
-
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-stream-dependencies:$springCloudStreamVersion")
-    }
 }
 
 dependencies {

@@ -25,6 +25,7 @@ class WordCountProcessorApplication
 fun main(args: Array<String>) {
     SpringApplication.run(WordCountProcessorApplication::class.java, *args)
 }
+//todo https://github.com/spring-cloud/spring-cloud-stream-samples/blob/master/processor-samples/reactive-processor/src/main/java/reactive/kafka/ReactiveProcessorApplication.java
 
 @Configuration
 class WorkCountProcessor(

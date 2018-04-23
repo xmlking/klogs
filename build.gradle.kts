@@ -1,21 +1,19 @@
+import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.dsl.SpringBootExtension
 import org.springframework.boot.gradle.tasks.run.BootRun
 
-val kafkaVersion by project
-
 plugins {
-    val kotlinVersion = "1.1.61"
-    val springDependencyManagement = "1.0.4.RELEASE"
-    val springBootVersion = "2.0.0.M7"
-    val junitGradleVersion = "1.0.2"
-    val dockerPluginVersion = "0.17.2"
+    val kotlinVersion = "1.2.40"
+    val springBootVersion = "2.0.1.RELEASE"
+    val springDependencyManagement = "1.0.5.RELEASE"
+    val dockerPluginVersion = "0.19.2"
 
     base
     id("org.jetbrains.kotlin.jvm") version kotlinVersion
-    id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion apply false
     id("org.springframework.boot") version springBootVersion apply false
-    id("org.junit.platform.gradle.plugin") version junitGradleVersion apply false
+    id("org.jetbrains.kotlin.plugin.spring") version kotlinVersion apply false
+    id("org.jetbrains.kotlin.plugin.noarg") version kotlinVersion apply false
     id("io.spring.dependency-management") version springDependencyManagement apply false
     id("com.palantir.docker") version dockerPluginVersion apply false
 }
@@ -30,40 +28,49 @@ subprojects {
 
     apply {
         plugin("org.jetbrains.kotlin.jvm")
-        plugin("org.jetbrains.kotlin.plugin.spring")
-        plugin("org.junit.platform.gradle.plugin")
-        plugin("io.spring.dependency-management")
         plugin("org.springframework.boot")
+        plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("org.jetbrains.kotlin.plugin.noarg")
+        plugin("io.spring.dependency-management")
     }
 
     repositories {
         mavenCentral()
-        mavenLocal()
-        maven("https://repo.spring.io/milestone")
-        maven("https://repo.spring.io/snapshot" )
+    }
+
+    configure<DependencyManagementExtension> {
+        val springCloudVersion: String = "Finchley.M9"
+        val springCloudStreamVersion = "Elmhurst.RELEASE" //"2.0.0.RELEASE" //"Elmhurst.RELEASE"
+
+        imports {
+            mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+            mavenBom("org.springframework.cloud:spring-cloud-stream-dependencies:springCloudStreamVersion")
+        }
     }
 
     dependencies {
         // kotlin
-        compile("org.jetbrains.kotlin:kotlin-stdlib-jre8")
-        compile("org.jetbrains.kotlin:kotlin-reflect")
+        compile(kotlin("stdlib-jdk8"))
+        compile(kotlin("reflect"))
         // Web
-        // compile("org.springframework.boot:spring-boot-starter-webflux")
-        compile("org.springframework.boot:spring-boot-starter-web")
+        compile("org.springframework.boot:spring-boot-starter-webflux")
         compile("com.fasterxml.jackson.module:jackson-module-kotlin")
         compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
         // Testing
+        testCompile("io.projectreactor:reactor-test")
         testCompile("org.springframework.boot:spring-boot-starter-test") {
             exclude(module = "junit")
         }
-        testCompile("org.junit.jupiter:junit-jupiter-api")
-        testCompile("io.projectreactor:reactor-test")
-        testRuntime("org.junit.jupiter:junit-jupiter-engine")
+        testImplementation("org.junit.jupiter:junit-jupiter-api")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
         // Tooling
-        // compileOnly("org.springframework:spring-context-indexer")
-        // compile("org.springframework.boot:spring-boot-devtools")
-        // compile("org.springframework.boot:spring-boot-starter-actuator")
-        // compile("io.micrometer:micrometer-registry-prometheus")
+        compileOnly("org.springframework:spring-context-indexer")
+        compile("org.springframework.boot:spring-boot-devtools")
+        compile("org.springframework.boot:spring-boot-starter-actuator")
+        compile("io.micrometer:micrometer-registry-prometheus")
+
         compileOnly("org.springframework.boot:spring-boot-configuration-processor")
     }
 
@@ -73,6 +80,19 @@ subprojects {
                 jvmTarget = "1.8"
                 freeCompilerArgs = listOf("-Xjsr305=strict")
             }
+        }
+    }
+
+    val test by tasks.getting(Test::class) {
+        useJUnitPlatform {
+            includeTags ("fast", "smoke")
+            excludeTags ("slow", "ci")
+            includeEngines ("junit-jupiter")
+            excludeEngines ("junit-vintage")
+        }
+        failFast = true
+        testLogging {
+            events ("passed", "skipped", "failed")
         }
     }
 

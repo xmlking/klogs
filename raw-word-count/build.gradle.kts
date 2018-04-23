@@ -1,9 +1,6 @@
 import com.palantir.gradle.docker.DockerExtension
 import org.gradle.jvm.tasks.Jar
 
-val kafkaVersion by project
-val springKafkaVersion by project
-
 apply {
     plugin("com.palantir.docker")
 }
@@ -25,7 +22,7 @@ docker {
 dependencies {
     compile(project(":shared"))
     compile("org.springframework.kafka:spring-kafka")
-    compile("org.apache.kafka:kafka-streams:$kafkaVersion")
+    compile("org.apache.kafka:kafka-streams")
 }
 
 /**

@@ -5,6 +5,7 @@ Kafka-kstream
 ```bash
 docker-compose -f docker-compose-local.yml up
 ```
+TODO  https://github.com/spring-cloud/spring-cloud-stream-samples/blob/master/processor-samples/reactive-processor/src/main/java/reactive/kafka/ReactiveProcessorApplication.java
 
 ### run app
 ```bash
@@ -46,3 +47,8 @@ gradle classifier:dependencyInsight --dependency spring-messaging
 # refresh dependencies
 gradle build -x test --refresh-dependencies 
 ```
+
+### TODO
+
+* https://github.com/sdeleuze/webflux-kotlin-web-tests
+* https://www.arcadiadata.com/resources/knowledge-base/article/get-running-with-arcadia-instant-and-ksql/
