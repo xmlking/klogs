@@ -53,6 +53,7 @@ subprojects {
         // kotlin
         compile(kotlin("stdlib-jdk8"))
         compile(kotlin("reflect"))
+
         // Web
         compile("org.springframework.boot:spring-boot-starter-webflux")
         compile("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -75,12 +76,10 @@ subprojects {
         compileOnly("org.springframework.boot:spring-boot-configuration-processor")
     }
 
-    tasks {
-        withType<KotlinCompile>().all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-                freeCompilerArgs = listOf("-Xjsr305=strict")
-            }
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = org.gradle.api.JavaVersion.VERSION_1_8.toString()
+            freeCompilerArgs = listOf("-Xjsr305=strict")
         }
     }
 
@@ -100,5 +99,4 @@ subprojects {
     configure<SpringBootExtension> {
         buildInfo()
     }
-
 }
