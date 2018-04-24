@@ -36,15 +36,16 @@ subprojects {
 
     repositories {
         mavenCentral()
+        maven { url = uri("https://repo.spring.io/libs-milestone") }
     }
 
     configure<DependencyManagementExtension> {
         val springCloudVersion: String = "Finchley.M9"
-        val springCloudStreamVersion = "Elmhurst.RELEASE" //"2.0.0.RELEASE" //"Elmhurst.RELEASE"
+        val springCloudStreamVersion = "Elmhurst.RELEASE"
 
         imports {
             mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
-            mavenBom("org.springframework.cloud:spring-cloud-stream-dependencies:springCloudStreamVersion")
+            mavenBom("org.springframework.cloud:spring-cloud-stream-dependencies:$springCloudStreamVersion")
         }
     }
 
